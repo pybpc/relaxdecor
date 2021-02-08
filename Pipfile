@@ -1,0 +1,36 @@
+[[source]]
+name = "tuna"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+verify_ssl = true
+
+[[source]]
+name = "sjtu"
+url = "https://mirrors.sjtug.sjtu.edu.cn/pypi/web/simple"
+verify_ssl = true
+
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+#dictmerge = {editable = true,path = "."}
+ipython = "*"
+autopep8 = "*"
+codecov = "*"
+coverage = "*"
+homebrew-pypi-poet = "*"
+pylint = "*"
+requests = "*"
+sphinx = "*"
+sphinxcontrib-napoleon = "*"
+sphinxemoji = "*"
+rstcheck = "*"
+
+[packages]
+tbtrim = "*"
+parso = ">=0.6.0"
+bpc-utils = ">=0.6.2"
+
+[requires]
+python_version = "3.8"
