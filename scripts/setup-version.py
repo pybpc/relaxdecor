@@ -4,7 +4,7 @@ import os
 import re
 import time
 
-with open(os.path.join(os.path.dirname(__file__), '..', 'dictmerge.py')) as file:
+with open(os.path.join(os.path.dirname(__file__), '..', 'relaxdecor.py')) as file:
     for line in file:
         match = re.match(r"^__version__ = '(.*)'", line)
         if match is None:
@@ -25,7 +25,7 @@ with open(os.path.join(os.path.dirname(__file__), '..', 'setup.py'), 'w') as fil
     file.writelines(context)
 
 context = list()
-with open(os.path.join(os.path.dirname(__file__), '..', 'share', 'dictmerge.rst')) as file:
+with open(os.path.join(os.path.dirname(__file__), '..', 'share', 'relaxdecor.rst')) as file:
     for line in file:
         match = re.match(r":Version: (.*)", line)
         if match is None:
@@ -37,5 +37,5 @@ with open(os.path.join(os.path.dirname(__file__), '..', 'share', 'dictmerge.rst'
         else:
             context.append(f':Version: v{__version__}\n')
 
-with open(os.path.join(os.path.dirname(__file__), '..', 'share', 'dictmerge.rst'), 'w') as file:
+with open(os.path.join(os.path.dirname(__file__), '..', 'share', 'relaxdecor.rst'), 'w') as file:
     file.writelines(context)

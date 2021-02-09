@@ -14,18 +14,21 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-#dictmerge = {editable = true,path = "."}
-ipython = "*"
+relaxdecor = {editable = true,path = "."}
 autopep8 = "*"
-codecov = "*"
-coverage = "*"
-homebrew-pypi-poet = "*"
+bandit = "*"
+mypy = "*"
 pylint = "*"
-requests = "*"
+ipython = "*"
+coverage = "*"
+codecov = "*"
 sphinx = "*"
-sphinxcontrib-napoleon = "*"
 sphinxemoji = "*"
+sphinx-autodoc-typehints = "*"
 rstcheck = "*"
+pytest = "*"
+pytest-cov = "*"
+tox = "*"
 
 [packages]
 tbtrim = "*"
@@ -33,4 +36,4 @@ parso = ">=0.6.0"
 bpc-utils = ">=0.6.2"
 
 [requires]
-python_version = "3.8"
+python_version = "3.9"

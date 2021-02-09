@@ -19,14 +19,14 @@ __version__ = '0.0.0.dev0'
 
 # set-up script for pip distribution
 setup(
-    name='bpc-dictmerge',
+    name='bpc-relaxdecor',
     version=__version__,
     author='Jarry Shaw',
     author_email='jarryshaw@icloud.com',
-    url='https://github.com/pybpc/dictmerge',
+    url='https://github.com/pybpc/relaxdecor',
     license='MIT License',
-    keywords=['dict merge operator', 'back-port compiler'],
-    description='Back-port compiler for Python 3.9 dict merge operator.',
+    keywords=['relaxed decorator grammar', 'back-port compiler'],
+    description='Back-port compiler for Python 3.9 relaxed decorator grammar.',
     long_description=long_desc,
     long_description_content_type='text/markdown; charset=UTF-8',
     python_requires='>=3.4',
@@ -36,10 +36,10 @@ setup(
         'tbtrim>=0.2.1',     # traceback trim support
         'bpc-utils>=0.6.2',  # utility library
     ],
-    py_modules=['dictmerge'],
+    py_modules=['relaxdecor'],
     entry_points={
         'console_scripts': [
-            'dictmerge = dictmerge:main',
+            'relaxdecor = relaxdecor:main',
         ]
     },
     package_data={

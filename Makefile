@@ -3,7 +3,7 @@
 export PIPENV_VERBOSITY=-1
 
 # get version string
-version  = $(shell cat dictmerge.py | grep "^__version__" | sed "s/__version__ = '\(.*\)'/\1/")
+version  = $(shell cat relaxdecor.py | grep "^__version__" | sed "s/__version__ = '\(.*\)'/\1/")
 
 after: git-after
 clean: pypi-clean
@@ -32,8 +32,8 @@ formula: setup-formula
 	set -ae
 	cd Tap
 	git pull
-	git add Formula/dictmerge.rb
-	git commit -S -m "dictmerge: $(version)"
+	git add Formula/relaxdecor.rb
+	git commit -S -m "relaxdecor: $(version)"
 	git push
 
 test:
@@ -100,7 +100,7 @@ setup-formula: setup-version pipenv-update
 	pipenv run python scripts/setup-formula.py
 
 setup-manual: setup-version
-	pipenv run rst2man.py share/dictmerge.rst > share/dictmerge.1
+	pipenv run rst2man.py share/relaxdecor.rst > share/relaxdecor.1
 
 git-upload:
 	git pull
@@ -117,7 +117,7 @@ git-after:
 git-release:
 	go run github.com/aktau/github-release release \
 	    --user pybpc \
-	    --repo dictmerge \
+	    --repo relaxdecor \
 	    --tag "v$(version)" \
-	    --name "dictmerge v$(version)" \
+	    --name "relaxdecor v$(version)" \
 	    --description "$$(git log -1 --pretty=%B)"
