@@ -19,11 +19,11 @@ __version__ = '0.0.0.dev0'
 
 # set-up script for pip distribution
 setup(
-    name='bpc-relaxdecor',
+    name='bpc-relaxedecor',
     version=__version__,
     author='Jarry Shaw',
     author_email='jarryshaw@icloud.com',
-    url='https://github.com/pybpc/relaxdecor',
+    url='https://github.com/pybpc/relaxedecor',
     license='MIT License',
     keywords=['relaxed decorator grammar', 'back-port compiler'],
     description='Back-port compiler for Python 3.9 relaxed decorator grammar.',
@@ -36,10 +36,10 @@ setup(
         'tbtrim>=0.2.1',     # traceback trim support
         'bpc-utils>=0.6.2',  # utility library
     ],
-    py_modules=['relaxdecor'],
+    py_modules=['relaxedecor'],
     entry_points={
         'console_scripts': [
-            'relaxdecor = relaxdecor:main',
+            'relaxedecor = relaxedecor:main',
         ]
     },
     package_data={

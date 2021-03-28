@@ -1,10 +1,10 @@
-# relaxdecor
+# relaxedecor
 
-[![PyPI - Downloads](https://pepy.tech/badge/bpc-relaxdecor)](https://pepy.tech/count/bpc-relaxdecor)
-[![PyPI - Version](https://img.shields.io/pypi/v/bpc-relaxdecor.svg)](https://pypi.org/project/bpc-relaxdecor)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/bpc-relaxdecor.svg)](https://pypi.org/project/bpc-relaxdecor)
+[![PyPI - Downloads](https://pepy.tech/badge/bpc-relaxedecor)](https://pepy.tech/count/bpc-relaxedecor)
+[![PyPI - Version](https://img.shields.io/pypi/v/bpc-relaxedecor.svg)](https://pypi.org/project/bpc-relaxedecor)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/bpc-relaxedecor.svg)](https://pypi.org/project/bpc-relaxedecor)
 
-[![Travis CI - Status](https://img.shields.io/travis/pybpc/relaxdecor.svg)](https://travis-ci.com/pybpc/relaxdecor)
-[![Codecov - Coverage](https://codecov.io/gh/pybpc/relaxdecor/branch/master/graph/badge.svg)](https://codecov.io/gh/pybpc/relaxdecor)
-[![Documentation Status](https://readthedocs.org/projects/bpc-relaxdecor/badge/?version=latest)](https://bpc-relaxdecor.readthedocs.io/en/latest/)
+[![Travis CI - Status](https://img.shields.io/travis/pybpc/relaxedecor.svg)](https://travis-ci.com/pybpc/relaxedecor)
+[![Codecov - Coverage](https://codecov.io/gh/pybpc/relaxedecor/branch/master/graph/badge.svg)](https://codecov.io/gh/pybpc/relaxedecor)
+[![Documentation Status](https://readthedocs.org/projects/bpc-relaxedecor/badge/?version=latest)](https://bpc-relaxedecor.readthedocs.io/en/latest/)
 <!-- [![LICENSE](https://img.shields.io/badge/license-Anti%20996-blue.svg)](https://github.com/996icu/996.ICU/blob/master/LICENSE) -->
