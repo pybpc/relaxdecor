@@ -23,7 +23,7 @@ from typing_extensions import Literal, final
 __all__ = ['main', 'relaxedecor', 'convert', 'decorator']  # pylint: disable=undefined-all-variable
 
 # version string
-__version__ = '0.4.3'
+__version__ = '0.0.0.dev0'
 
 ###############################################################################
 # Typings
