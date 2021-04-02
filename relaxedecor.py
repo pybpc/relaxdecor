@@ -357,8 +357,6 @@ class Context(BaseContext):
       - :meth:`Context._process_try_stmt`
 
     """
-    #: re.Pattern: Regular expression to check of restricted decorator expressions.
-    pattern_decorator = re.compile(r'[a-zA-Z_]\w*(\.[a-zA-Z_]\w*)*(\(.*?\))?', re.ASCII)
 
     @final
     @property
