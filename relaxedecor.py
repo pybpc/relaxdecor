@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Back-port compiler for Python 3.9 relaxed decorator grammar."""
+"""Back-port compiler for Python 3.9 relaxed decorator expressions."""
 
 import argparse
 import os
@@ -286,7 +286,7 @@ tbtrim.set_trim_rule(predicate, strict=True, target=BPCSyntaxError)
 # cf. https://www.python.org/dev/peps/pep-0614/#motivation
 DECORATOR_TEMPLATE = '''\
 def %(decorator)s(expr):
-%(indentation)s"""Relaxed decorator grammar runtime wrapper.
+%(indentation)s"""Relaxed decorator expressions runtime wrapper.
 %(indentation)s
 %(indentation)s    Args:
 %(indentation)s        expr: Expected decorator expression.

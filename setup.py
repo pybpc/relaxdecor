@@ -1,69 +1,77 @@
 # -*- coding: utf-8 -*-
 
 import os
+import subprocess  # nosec
+import sys
 
-try:
-    from setuptools import setup
-except ImportError:
-    from distutils.core import setup
+from setuptools import setup
 
-# root path
-ROOT = os.path.dirname(os.path.realpath(__file__))
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
-# README
-with open(os.path.join(ROOT, 'README.md'), encoding='utf-8') as file:
-    long_desc = file.read()
+with open('README.md', 'r', encoding='utf-8') as f:
+    long_description = f.read()
 
-# version string
-__version__ = '0.0.0.dev0'
+module_name = 'relaxedecor'
+version = subprocess.check_output([sys.executable,  # nosec
+                                   os.path.join('scripts', 'find_version.py')],
+                                  universal_newlines=True).strip()
 
-# set-up script for pip distribution
 setup(
     name='bpc-relaxedecor',
-    version=__version__,
+    version=version,
+    description='Backport compiler for Python 3.9 relaxed decorator expressions.',
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    url='https://github.com/pybpc/relaxedecor',
     author='Jarry Shaw',
     author_email='jarryshaw@icloud.com',
-    url='https://github.com/pybpc/relaxedecor',
-    license='MIT License',
-    keywords=['relaxed decorator grammar', 'back-port compiler'],
-    description='Back-port compiler for Python 3.9 relaxed decorator grammar.',
-    long_description=long_desc,
-    long_description_content_type='text/markdown; charset=UTF-8',
-    python_requires='>=3.4',
-    zip_safe=True,
-    install_requires=[
-        'parso>=0.6.0',      # universal AST support
-        'tbtrim>=0.2.1',     # traceback trim support
-        'bpc-utils>=0.6.2',  # utility library
-    ],
-    py_modules=['relaxedecor'],
-    entry_points={
-        'console_scripts': [
-            'relaxedecor = relaxedecor:main',
-        ]
-    },
-    package_data={
-        '': [
-            'LICENSE',
-            'README.md',
-            'CHANGELOG.md',
-        ],
-    },
+    license='MIT',
     classifiers=[
-        'Development Status :: 4 - Beta',
-        # 'Development Status :: 5 - Production/Stable',
+        'Development Status :: 5 - Production/Stable',
         'Intended Audience :: Developers',
+        'Intended Audience :: Information Technology',
         'License :: OSI Approved :: MIT License',
-        'Natural Language :: English',
         'Operating System :: OS Independent',
-        'Programming Language :: Python',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3 :: Only',
         'Topic :: Software Development',
         'Topic :: Utilities',
-    ]
+        'Typing :: Typed',
+    ],
+    keywords='bpc backport utilities',
+    py_modules=[module_name],
+    python_requires='>=3.4',
+    install_requires=[
+        'bpc-utils~=0.10.0',    # utility library
+    ],
+    extras_require={
+        'lint': [
+            'flake8',
+            'pylint',
+            'mypy',
+            'bandit>=1.6.3',
+            'vermin>=1.1.0',
+            'colorlabels>=0.7.0',
+            'parso>=0.8.0',
+        ],
+        'test': [
+            'pytest>=4.5.0',
+            'pytest-doctestplus>=0.5.0',
+            'coverage',
+        ],
+        'docs': [
+            'Sphinx',
+            'sphinx-autodoc-typehints',
+        ],
+    },
+    entry_points={
+        'console_scripts': [
+            'relaxedecor = relaxedecor:main',
+        ]
+    },
 )
