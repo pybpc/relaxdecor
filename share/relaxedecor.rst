@@ -1,13 +1,13 @@
-========
+===========
 relaxedecor
-========
+===========
 
 ---------------------------------------------------------------
 back-port compiler for Python 3.9 relaxed decorator expressions
 ---------------------------------------------------------------
 
-:Version: v0.0.0dev0
-:Date: April 2, 2021
+:Version: v0.0.0.dev0
+:Date: April 03, 2021
 :Manual section: 1
 :Author:
     Contributors of the Python Backport Compiler project.
