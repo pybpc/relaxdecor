@@ -1,0 +1,498 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>API Reference &#8212; relaxedeco 0.0.0.dev0 documentation</title>
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Algorithms" href="algorithms.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-walrus">
+<span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-walrus" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="public-interface">
+<h2>Public Interface<a class="headerlink" href="#public-interface" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="conversion-implementation">
+<h2>Conversion Implementation<a class="headerlink" href="#conversion-implementation" title="Permalink to this headline">¶</a></h2>
+<p>The main logic of the <code class="docutils literal notranslate"><span class="pre">walrus</span></code> conversion is to wrap <em>assignment expressions</em>
+as functions which manipulates variable namespaces to implement the <strong>assignment</strong>
+part and evaluates original code blocks to archive the <strong>expression</strong> part.</p>
+<p>For conversion algorithms and details, please refer to <a class="reference internal" href="algorithms.html"><span class="doc">Algorithms</span></a>.</p>
+<div class="section" id="data-structures">
+<h3>Data Structures<a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h3>
+<p>During conversion, we utilised <a class="reference external" href="https://bpc-utils.readthedocs.io/en/latest/index.html#bpc_utils.Config" title="(in bpc-utils)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bpc_utils.Config</span></code></a> to store and deliver the
+configurations over the conversion <code class="xref py py-class docutils literal notranslate"><span class="pre">Context</span></code> instances, which should
+be as following:</p>
+<dl class="py class">
+<dt id="walrus.Config">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">Config</span></code><a class="headerlink" href="#walrus.Config" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configuration object shared over the conversion process of a single source file.</p>
+<dl class="py attribute">
+<dt id="walrus.Config.indentation">
+<code class="sig-name descname"><span class="pre">indentation</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#walrus.Config.indentation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Indentation sequence.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="walrus.Config.linesep">
+<code class="sig-name descname"><span class="pre">linesep</span></code><em class="property"><span class="pre">:</span> <span class="pre">Literal['\n',</span> <span class="pre">'\r\n',</span> <span class="pre">'\r']</span></em><a class="headerlink" href="#walrus.Config.linesep" title="Permalink to this definition">¶</a></dt>
+<dd><p>Line separator.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="walrus.Config.pep8">
+<code class="sig-name descname"><span class="pre">pep8</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.9)"><span class="pre">bool</span></a></em><a class="headerlink" href="#walrus.Config.pep8" title="Permalink to this definition">¶</a></dt>
+<dd><p><span class="target" id="index-0"></span><a class="pep reference external" href="https://www.python.org/dev/peps/pep-0008"><strong>PEP 8</strong></a> compliant conversion flag.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="walrus.Config.filename">
+<code class="sig-name descname"><span class="pre">filename</span></code><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#walrus.Config.filename" title="Permalink to this definition">¶</a></dt>
+<dd><p>An optional source file name to provide a context in case of error.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="walrus.Config.source_version">
+<code class="sig-name descname"><span class="pre">source_version</span></code><em class="property"><span class="pre">:</span> <span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#walrus.Config.source_version" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse the code as this Python version (uses the latest version by default).</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>Since conversion of assignment expressions in different statements has different
+processing logics and templates, we hereby describe two data structures representing
+such information.</p>
+<p>The <a class="reference internal" href="#walrus.FunctionEntry" title="walrus.FunctionEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">FunctionEntry</span></code></a> represents an assignment expression at most circumstances. It
+will be provided to <a class="reference internal" href="#walrus.FUNC_TEMPLATE" title="walrus.FUNC_TEMPLATE"><code class="xref py py-data docutils literal notranslate"><span class="pre">FUNC_TEMPLATE</span></code></a> to render the wrapper function for
+the conversion.</p>
+<dl class="py class">
+<dt id="walrus.FunctionEntry">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">FunctionEntry</span></code><a class="headerlink" href="#walrus.FunctionEntry" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Bases</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">typing.TypedDict</span></code></a></p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="walrus.FunctionEntry.name">
+<code class="sig-name descname"><span class="pre">name</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#walrus.FunctionEntry.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Function name, as the original <em>left-hand-side</em> variable name
+from the assignment expression.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="walrus.FunctionEntry.uuid">
+<code class="sig-name descname"><span class="pre">uuid</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#walrus.FunctionEntry.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>UUID text in the function name to avoid name collision with existing functions.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="walrus.FunctionEntry.scope_keyword">
+<code class="sig-name descname"><span class="pre">scope_keyword</span></code><em class="property"><span class="pre">:</span> <span class="pre">Literal['global',</span> <span class="pre">'nonlocal']</span></em><a class="headerlink" href="#walrus.FunctionEntry.scope_keyword" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scope manipulation keyword. If <a class="reference internal" href="#walrus.FunctionEntry.name" title="walrus.FunctionEntry.name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code></a> is declared in <em>global</em>
+namespace, then it will be <code class="docutils literal notranslate"><span class="pre">'global'</span></code>, else <code class="docutils literal notranslate"><span class="pre">'nonlocal'</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the <em>left-hand-side</em> variable name is recorded in the global context
+(<code class="xref py py-attr docutils literal notranslate"><span class="pre">Context.global_stmt</span></code>), then the converted function should use
+<code class="docutils literal notranslate"><span class="pre">'global'</span></code> as its scope keyword.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<p>The <a class="reference internal" href="#walrus.LambdaEntry" title="walrus.LambdaEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">LambdaEntry</span></code></a> represents an assignment expression declared in <em>lambda</em>
+statements. It will be provided to <a class="reference internal" href="#walrus.LAMBDA_FUNC_TEMPLATE" title="walrus.LAMBDA_FUNC_TEMPLATE"><code class="xref py py-data docutils literal notranslate"><span class="pre">LAMBDA_FUNC_TEMPLATE</span></code></a> to render
+the wrapper function for the conversion.</p>
+<dl class="py class">
+<dt id="walrus.LambdaEntry">
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">LambdaEntry</span></code><a class="headerlink" href="#walrus.LambdaEntry" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Bases</dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.TypedDict" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">typing.TypedDict</span></code></a></p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt id="walrus.LambdaEntry.param">
+<code class="sig-name descname"><span class="pre">param</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#walrus.LambdaEntry.param" title="Permalink to this definition">¶</a></dt>
+<dd><p>Concatenated parameter string for the wrapper function.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="walrus.LambdaEntry.suite">
+<code class="sig-name descname"><span class="pre">suite</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#walrus.LambdaEntry.suite" title="Permalink to this definition">¶</a></dt>
+<dd><p>Original <em>lambda</em> suite with assignment expressions converted.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="walrus.LambdaEntry.uuid">
+<code class="sig-name descname"><span class="pre">uuid</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#walrus.LambdaEntry.uuid" title="Permalink to this definition">¶</a></dt>
+<dd><p>UUID text in the function name to avoid name collision with existing functions.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="conversion-templates">
+<h3>Conversion Templates<a class="headerlink" href="#conversion-templates" title="Permalink to this headline">¶</a></h3>
+<p>For general conversion scenarios, the converted wrapper functions will be
+rendered based on the following templates.</p>
+<dl class="py data">
+<dt id="walrus.NAME_TEMPLATE">
+<code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">NAME_TEMPLATE</span></code><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#walrus.NAME_TEMPLATE" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;if False:&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;</span><span class="si">%(indentation)s%(name_list)s</span><span class="s1"> = NotImplemented&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Declares variables in the current scope for using <code class="docutils literal notranslate"><span class="pre">global</span></code> and/or
+<code class="docutils literal notranslate"><span class="pre">nonlocal</span></code> statements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>indentation</strong> – indentation sequence as defined in
+<a class="reference internal" href="#walrus.Config.indentation" title="walrus.Config.indentation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Config.indentation</span></code></a></p></li>
+<li><p><strong>name_list</strong> – equal (<code class="docutils literal notranslate"><span class="pre">=</span></code>) separated list of variable names</p></li>
+</ul>
+</dd>
+</dl>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>This is a rather hack way to fool the Python interpreter that such
+variables had been declared in the current scope, whilst not actually
+declaring such variables at runtime.</p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt id="walrus.CALL_TEMPLATE">
+<code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">CALL_TEMPLATE</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#walrus.CALL_TEMPLATE" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;_walrus_wrapper_</span><span class="si">%(name)s</span><span class="s1">_</span><span class="si">%(uuid)s</span><span class="s1">(</span><span class="si">%(expr)s</span><span class="s1">)&#39;</span>
+</pre></div>
+</div>
+<p>Wrapper function call to replace the original assignment expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – <em>left-hand-side</em> variable name</p></li>
+<li><p><strong>uuid</strong> – UUID text</p></li>
+<li><p><strong>expr</strong> – <em>right-hand-side</em> expression</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt id="walrus.FUNC_TEMPLATE">
+<code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">FUNC_TEMPLATE</span></code><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#walrus.FUNC_TEMPLATE" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;def _walrus_wrapper_</span><span class="si">%(name)s</span><span class="s1">_</span><span class="si">%(uuid)s</span><span class="s1">(expr):&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;</span><span class="si">%(indentation)s</span><span class="s1">&quot;&quot;&quot;Wrapper function for assignment expression.&quot;&quot;&quot;&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;</span><span class="si">%(indentation)s%(scope_keyword)s</span><span class="s1"> </span><span class="si">%(name)s</span><span class="s1">&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;</span><span class="si">%(indentation)s%(name)s</span><span class="s1"> = expr&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;</span><span class="si">%(indentation)s</span><span class="s1">return </span><span class="si">%(name)s</span><span class="s1">&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Wrapper function call to replace the original assignment expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>indentation</strong> – indentation sequence as defined in
+<a class="reference internal" href="#walrus.Config.indentation" title="walrus.Config.indentation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Config.indentation</span></code></a></p></li>
+<li><p>**<strong>kwargs</strong> – function record as described in <code class="xref py py-class docutils literal notranslate"><span class="pre">Function</span></code></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p>For assignment expression in <em>lambda</em> expressions, the converted wrapper
+function will be rendered based on the following templates.</p>
+<dl class="py data">
+<dt id="walrus.LAMBDA_CALL_TEMPLATE">
+<code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">LAMBDA_CALL_TEMPLATE</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#walrus.LAMBDA_CALL_TEMPLATE" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s1">&#39;_walrus_wrapper_lambda_</span><span class="si">%(uuid)s</span><span class="s1">&#39;</span>
+</pre></div>
+</div>
+<p>Wrapper function call to replace the original assignment expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>uuid</strong> – UUID text</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py data">
+<dt id="walrus.LAMBDA_FUNC_TEMPLATE">
+<code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">LAMBDA_FUNC_TEMPLATE</span></code><em class="property"><span class="pre">:</span> <span class="pre">List</span><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#walrus.LAMBDA_FUNC_TEMPLATE" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="s1">&#39;def _walrus_wrapper_lambda_</span><span class="si">%(uuid)s</span><span class="s1">(</span><span class="si">%(param)s</span><span class="s1">):&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;</span><span class="si">%(indentation)s</span><span class="s1">&quot;&quot;&quot;Wrapper function for lambda definitions.&quot;&quot;&quot;&#39;</span><span class="p">,</span>
+ <span class="s1">&#39;</span><span class="si">%(indentation)s%(suite)s</span><span class="s1">&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Wrapper function call to replace the original assignment expression.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>indentation</strong> – indentation sequence as defined in
+<a class="reference internal" href="#walrus.Config.indentation" title="walrus.Config.indentation"><code class="xref py py-attr docutils literal notranslate"><span class="pre">Config.indentation</span></code></a></p></li>
+<li><p>**<strong>kwargs</strong> – function record as described in <a class="reference internal" href="#walrus.LambdaEntry" title="walrus.LambdaEntry"><code class="xref py py-class docutils literal notranslate"><span class="pre">LambdaEntry</span></code></a></p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<p>For assignment expression in <span class="xref std std-term">class variables</span>
+(<code class="docutils literal notranslate"><span class="pre">ClassVar</span></code>), the converted wrapper function will be rendered based on
+the following templates.</p>
+<dl class="py data">
+<dt id="walrus.CLS_TEMPLATE">
+<code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">CLS_TEMPLATE</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#walrus.CLS_TEMPLATE" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;(__import__(&#39;builtins&#39;).locals().__setitem__(</span><span class="si">%(name)r</span><span class="s2">, </span><span class="si">%(expr)s</span><span class="s2">), </span><span class="si">%(name)s</span><span class="s2">)[1]&quot;</span>
+</pre></div>
+</div>
+<p><em>One-liner</em> to rewrite the original assignment expression for
+a <em>regular</em> <span class="xref std std-term">class variable</span> definition.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> – variable name</p></li>
+<li><p><strong>expr</strong> – original <em>right-hand-side</em> expression</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If a wrapper function and/or class involves manipulation over the
+<a class="reference external" href="https://docs.python.org/3/reference/simple_stmts.html#grammar-token-global-stmt" title="(in Python v3.9)"><code class="xref std std-token docutils literal notranslate"><span class="pre">global</span></code></a> and <a class="reference external" href="https://docs.python.org/3/reference/simple_stmts.html#grammar-token-nonlocal-stmt" title="(in Python v3.9)"><code class="xref std std-token docutils literal notranslate"><span class="pre">nonlocal</span></code></a>
+statements, then <code class="docutils literal notranslate"><span class="pre">walrus</span></code> will append a UUID exclusively.</p>
+</div>
+</div>
+<div class="section" id="conversion-contexts">
+<h3>Conversion Contexts<a class="headerlink" href="#conversion-contexts" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
+<div class="section" id="internal-auxiliaries">
+<h2>Internal Auxiliaries<a class="headerlink" href="#internal-auxiliaries" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="options-defaults">
+<h3>Options &amp; Defaults<a class="headerlink" href="#options-defaults" title="Permalink to this headline">¶</a></h3>
+<p>Below are option getter utility functions. Option value precedence is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">explicit</span> <span class="n">value</span> <span class="p">(</span><span class="n">CLI</span><span class="o">/</span><span class="n">API</span> <span class="n">arguments</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">environment</span> <span class="n">variable</span> <span class="o">&gt;</span> <span class="n">default</span> <span class="n">value</span>
+</pre></div>
+</div>
+<p>The following variables are used for fallback default values of options.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>For <code class="xref py py-data docutils literal notranslate"><span class="pre">_default_concurrency</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">_default_linesep</span></code> and <code class="xref py py-data docutils literal notranslate"><span class="pre">_default_indentation</span></code>,
+<a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a> means <em>auto detection</em> during runtime.</p>
+</div>
+</div>
+<div class="section" id="cli-utilities">
+<h3>CLI Utilities<a class="headerlink" href="#cli-utilities" title="Permalink to this headline">¶</a></h3>
+<p>The following variables are used for help messages in the argument parser.</p>
+<dl class="py data">
+<dt id="walrus.walrus.__cwd__">
+<code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">__cwd__</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#walrus.walrus.__cwd__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Current working directory returned by <a class="reference external" href="https://docs.python.org/3/library/os.html#os.getcwd" title="(in Python v3.9)"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.getcwd()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt id="walrus.walrus.__walrus_quiet__">
+<code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">__walrus_quiet__</span></code><em class="property"><span class="pre">:</span> <span class="pre">Literal['quiet</span> <span class="pre">mode',</span> <span class="pre">'non-quiet</span> <span class="pre">mode']</span></em><a class="headerlink" href="#walrus.walrus.__walrus_quiet__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default value for the <code class="docutils literal notranslate"><span class="pre">--quiet</span></code> option.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">walrus._get_quiet_option()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt id="walrus.walrus.__walrus_concurrency__">
+<code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">__walrus_concurrency__</span></code><em class="property"><span class="pre">:</span> <span class="pre">Union[int,</span> <span class="pre">Literal['auto</span> <span class="pre">detect']]</span></em><a class="headerlink" href="#walrus.walrus.__walrus_concurrency__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default value for the <code class="docutils literal notranslate"><span class="pre">--concurrency</span></code> option.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">walrus._get_concurrency_option()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt id="walrus.walrus.__walrus_do_archive__">
+<code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">__walrus_do_archive__</span></code><em class="property"><span class="pre">:</span> <span class="pre">Literal['will</span> <span class="pre">do</span> <span class="pre">archive',</span> <span class="pre">'will</span> <span class="pre">not</span> <span class="pre">do</span> <span class="pre">archive']</span></em><a class="headerlink" href="#walrus.walrus.__walrus_do_archive__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default value for the <code class="docutils literal notranslate"><span class="pre">--no-archive</span></code> option.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">walrus._get_do_archive_option()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt id="walrus.walrus.__walrus_archive_path__">
+<code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">__walrus_archive_path__</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#walrus.walrus.__walrus_archive_path__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default value for the <code class="docutils literal notranslate"><span class="pre">--archive-path</span></code> option.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">walrus._get_archive_path_option()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt id="walrus.walrus.__walrus_source_version__">
+<code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">__walrus_source_version__</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#walrus.walrus.__walrus_source_version__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default value for the <code class="docutils literal notranslate"><span class="pre">--source-version</span></code> option.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">walrus._get_source_version_option()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt id="walrus.walrus.__walrus_linesep__">
+<code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">__walrus_linesep__</span></code><em class="property"><span class="pre">:</span> <span class="pre">Literal['LF',</span> <span class="pre">'CRLF',</span> <span class="pre">'CR',</span> <span class="pre">'auto</span> <span class="pre">detect']</span></em><a class="headerlink" href="#walrus.walrus.__walrus_linesep__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default value for the <code class="docutils literal notranslate"><span class="pre">--linesep</span></code> option.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">walrus._get_linesep_option()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt id="walrus.walrus.__walrus_indentation__">
+<code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">__walrus_indentation__</span></code><em class="property"><span class="pre">:</span> <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.9)"><span class="pre">str</span></a></em><a class="headerlink" href="#walrus.walrus.__walrus_indentation__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default value for the <code class="docutils literal notranslate"><span class="pre">--indentation</span></code> option.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">walrus._get_indentation_option()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt id="walrus.walrus.__walrus_pep8__">
+<code class="sig-prename descclassname"><span class="pre">walrus.</span></code><code class="sig-name descname"><span class="pre">__walrus_pep8__</span></code><em class="property"><span class="pre">:</span> <span class="pre">Literal['will</span> <span class="pre">conform</span> <span class="pre">to</span> <span class="pre">PEP</span> <span class="pre">8',</span> <span class="pre">'will</span> <span class="pre">not</span> <span class="pre">conform</span> <span class="pre">to</span> <span class="pre">PEP</span> <span class="pre">8']</span></em><a class="headerlink" href="#walrus.walrus.__walrus_pep8__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Default value for the <code class="docutils literal notranslate"><span class="pre">--no-pep8</span></code> option.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-func docutils literal notranslate"><span class="pre">walrus._get_pep8_option()</span></code></p>
+</div>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">relaxedeco</a></h1>
+
+
+
+
+
+
+<p>
+<iframe src="https://ghbtns.com/github-btn.html?user=pybpc&repo=relaxedeco&type=watch&count=true&size=large&v=2"
+  allowtransparency="true" frameborder="0" scrolling="0" width="200px" height="35px"></iframe>
+</p>
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="algorithms.html">Algorithms</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#public-interface">Public Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#conversion-implementation">Conversion Implementation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-structures">Data Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conversion-templates">Conversion Templates</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#conversion-contexts">Conversion Contexts</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#internal-auxiliaries">Internal Auxiliaries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#options-defaults">Options &amp; Defaults</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#cli-utilities">CLI Utilities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="algorithms.html" title="previous chapter">Algorithms</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2021, Python Backport Compiler Project.
+      
+      |
+      <a href="_sources/api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+    <a href="https://github.com/pybpc/relaxedeco" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    
+
+    
+  </body>
+</html>
