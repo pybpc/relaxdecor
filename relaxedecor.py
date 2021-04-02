@@ -690,11 +690,29 @@ class Context(BaseContext):
 
         """
         if node.type == 'decorator':
-            # TODO: referred netromdk/vermin#51 for possible solution, i.e.,
+            # NOTE: referred netromdk/vermin#51 for possible solution, i.e.,
             # ast.Name, ast.Attribute and ast.Load are the only scenarios for
             # an old-fashioned decorator
-            code = node.children[1].get_code()  # type: ignore[attr-defined]
-            return not cls.pattern_decorator.fullmatch(code)
+            child = node.children[1]  # type: ignore[attr-defined]
+            if child.type == 'name':
+                return False
+
+            if hasattr(child, 'children'):
+                # <Name: ...> trailer ...
+                children = iter(child.children)
+                name = next(children)
+                if name.type != 'name':
+                    return True
+
+                # <Operator: .> <Name: ...>
+                for child in children:
+                    if child.type == 'trailer' and len(child.children) == 2:
+                        operator, name = child.children
+                        if operator.type == 'operator' and operator.value == '.' and name.type == 'name':
+                            continue
+                    return True
+                return False
+            return True
         if hasattr(node, 'children'):
             return any(map(cls.has_expr, node.children))  # type: ignore[attr-defined]
         return False
