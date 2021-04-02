@@ -67,6 +67,7 @@ setup(
         'docs': [
             'Sphinx',
             'sphinx-autodoc-typehints',
+            'sphinxemoji',
         ],
     },
     entry_points={
