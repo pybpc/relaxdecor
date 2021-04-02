@@ -18,7 +18,7 @@ jobs:
     - name: Setup versions
       run: |
         python scripts/setup_versions.py
-        rst2man.py share/template.rst > share/template.1
+        rst2man.py share/relaxedecor.rst > share/relaxedecor.1
     - name: Commit changes
       run: |
           git config --local user.email "action@github.com"
