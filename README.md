@@ -4,6 +4,7 @@
 
 # relaxedecor
 
+[![PyPI - Downloads](https://pepy.tech/badge/bpc-relaxedecor)](https://pepy.tech/count/bpc-relaxedecor)
 [![PyPI - Version](https://img.shields.io/pypi/v/bpc-relaxedecor.svg)](https://pypi.org/project/bpc-relaxedecor)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/bpc-relaxedecor.svg)](https://pypi.org/project/bpc-relaxedecor)
 

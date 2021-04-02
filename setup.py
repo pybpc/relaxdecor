@@ -43,7 +43,7 @@ setup(
         'Topic :: Utilities',
         'Typing :: Typed',
     ],
-    keywords='bpc backport utilities',
+    keywords=['relaxed decorator grammar', 'back-port compiler'],
     py_modules=[module_name],
     python_requires='>=3.4',
     install_requires=[
