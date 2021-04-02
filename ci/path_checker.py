@@ -3,7 +3,7 @@ import os
 import re
 import sys
 
-module_name = 'bpc_relaxedecor'
+module_name = 'relaxedecor'
 
 if not os.path.isfile('setup.py'):
     sys.exit('Please execute this script in the project root directory.')

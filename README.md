@@ -1,3 +1,7 @@
+# NB: `relaxedecor` is currently under reconstruction. It is highly recommended to directly install from the git repo or the pre-release distributions.
+
+---
+
 # relaxedecor
 
 [![PyPI - Version](https://img.shields.io/pypi/v/bpc-relaxedecor.svg)](https://pypi.org/project/bpc-relaxedecor)
