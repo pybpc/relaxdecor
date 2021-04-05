@@ -690,7 +690,9 @@ class Context(BaseContext):
 
         """
         if node.type == 'decorator':
-            # TODO: come up with a better idea to do the check or maybe just drop it?
+            # TODO: referred netromdk/vermin#51 for possible solution, i.e.,
+            # ast.Name, ast.Attribute and ast.Load are the only scenarios for
+            # an old-fashioned decorator
             code = node.children[1].get_code()  # type: ignore[attr-defined]
             return not cls.pattern_decorator.fullmatch(code)
         if hasattr(node, 'children'):
