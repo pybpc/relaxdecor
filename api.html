@@ -4,7 +4,8 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17: http://docutils.sourceforge.net/" />
+
     <title>API Reference &#8212; relaxedeco 0.0.0.dev0 documentation</title>
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
@@ -31,18 +32,18 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-walrus">
+  <section id="module-walrus">
 <span id="api-reference"></span><h1>API Reference<a class="headerlink" href="#module-walrus" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="public-interface">
+<section id="public-interface">
 <h2>Public Interface<a class="headerlink" href="#public-interface" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="conversion-implementation">
+</section>
+<section id="conversion-implementation">
 <h2>Conversion Implementation<a class="headerlink" href="#conversion-implementation" title="Permalink to this headline">¶</a></h2>
 <p>The main logic of the <code class="docutils literal notranslate"><span class="pre">walrus</span></code> conversion is to wrap <em>assignment expressions</em>
 as functions which manipulates variable namespaces to implement the <strong>assignment</strong>
 part and evaluates original code blocks to archive the <strong>expression</strong> part.</p>
 <p>For conversion algorithms and details, please refer to <a class="reference internal" href="algorithms.html"><span class="doc">Algorithms</span></a>.</p>
-<div class="section" id="data-structures">
+<section id="data-structures">
 <h3>Data Structures<a class="headerlink" href="#data-structures" title="Permalink to this headline">¶</a></h3>
 <p>During conversion, we utilised <a class="reference external" href="https://bpc-utils.readthedocs.io/en/latest/index.html#bpc_utils.Config" title="(in bpc-utils)"><code class="xref py py-class docutils literal notranslate"><span class="pre">bpc_utils.Config</span></code></a> to store and deliver the
 configurations over the conversion <code class="xref py py-class docutils literal notranslate"><span class="pre">Context</span></code> instances, which should
@@ -156,8 +157,8 @@ the wrapper function for the conversion.</p>
 
 </dd></dl>
 
-</div>
-<div class="section" id="conversion-templates">
+</section>
+<section id="conversion-templates">
 <h3>Conversion Templates<a class="headerlink" href="#conversion-templates" title="Permalink to this headline">¶</a></h3>
 <p>For general conversion scenarios, the converted wrapper functions will be
 rendered based on the following templates.</p>
@@ -292,14 +293,14 @@ a <em>regular</em> <span class="xref std std-term">class variable</span> definit
 <a class="reference external" href="https://docs.python.org/3/reference/simple_stmts.html#grammar-token-global-stmt" title="(in Python v3.9)"><code class="xref std std-token docutils literal notranslate"><span class="pre">global</span></code></a> and <a class="reference external" href="https://docs.python.org/3/reference/simple_stmts.html#grammar-token-nonlocal-stmt" title="(in Python v3.9)"><code class="xref std std-token docutils literal notranslate"><span class="pre">nonlocal</span></code></a>
 statements, then <code class="docutils literal notranslate"><span class="pre">walrus</span></code> will append a UUID exclusively.</p>
 </div>
-</div>
-<div class="section" id="conversion-contexts">
+</section>
+<section id="conversion-contexts">
 <h3>Conversion Contexts<a class="headerlink" href="#conversion-contexts" title="Permalink to this headline">¶</a></h3>
-</div>
-</div>
-<div class="section" id="internal-auxiliaries">
+</section>
+</section>
+<section id="internal-auxiliaries">
 <h2>Internal Auxiliaries<a class="headerlink" href="#internal-auxiliaries" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="options-defaults">
+<section id="options-defaults">
 <h3>Options &amp; Defaults<a class="headerlink" href="#options-defaults" title="Permalink to this headline">¶</a></h3>
 <p>Below are option getter utility functions. Option value precedence is:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">explicit</span> <span class="n">value</span> <span class="p">(</span><span class="n">CLI</span><span class="o">/</span><span class="n">API</span> <span class="n">arguments</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">environment</span> <span class="n">variable</span> <span class="o">&gt;</span> <span class="n">default</span> <span class="n">value</span>
@@ -311,8 +312,8 @@ statements, then <code class="docutils literal notranslate"><span class="pre">wa
 <p>For <code class="xref py py-data docutils literal notranslate"><span class="pre">_default_concurrency</span></code>, <code class="xref py py-data docutils literal notranslate"><span class="pre">_default_linesep</span></code> and <code class="xref py py-data docutils literal notranslate"><span class="pre">_default_indentation</span></code>,
 <a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.9)"><code class="xref py py-data docutils literal notranslate"><span class="pre">None</span></code></a> means <em>auto detection</em> during runtime.</p>
 </div>
-</div>
-<div class="section" id="cli-utilities">
+</section>
+<section id="cli-utilities">
 <h3>CLI Utilities<a class="headerlink" href="#cli-utilities" title="Permalink to this headline">¶</a></h3>
 <p>The following variables are used for help messages in the argument parser.</p>
 <dl class="py data">
@@ -401,9 +402,9 @@ statements, then <code class="docutils literal notranslate"><span class="pre">wa
 </div>
 </dd></dl>
 
-</div>
-</div>
-</div>
+</section>
+</section>
+</section>
 
 
           </div>
