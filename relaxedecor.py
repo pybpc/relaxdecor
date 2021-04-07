@@ -703,8 +703,8 @@ class Context(BaseContext):
                     return True
 
                 # <Operator: .> <Name: ...>
-                # <Operator: (> ( arglist | <Name: ...> ) <Operator: )> -> only once
-                func_call = False  # is function detected
+                # <Operator: (> [arglist] <Operator: )> -> at most once
+                func_call = False  # is function call detected
                 for child in children:
                     if func_call:  # function call should be the last permitted node before PEP 614
                         return True
@@ -713,29 +713,29 @@ class Context(BaseContext):
                     # them up by their types like in 3.8
                     if child.type == 'trailer':
                         # <Operator: .> <Name: ...>
-                        # <Operator: (> <Operator: )> -> only once
-                        if len(child.children) == 2:  # attribute getter or function call without arguments
+                        # <Operator: (> <Operator: )> -> at most once
+                        if len(child.children) == 2:
                             first, second = child.children
-                            if (first.type == 'operator' and first.value == '.' and second.type == 'name'):
+                            if (first.type == 'operator' and first.value == '.'
+                                    and second.type == 'name'):  # <Operator: .> <Name: ...>
                                 continue
                             if first.type == 'operator' and first.value == '(' \
                                     and second.type == 'operator' and second.value == ')' \
-                                    and not func_call:
+                                    and not func_call:  # function call without arguments
                                 func_call = True
                                 continue
 
-                        # <Operator: (> ( arglist | <Name: ...> ) <Operator: )> -> only once
-                        if len(child.children) == 3:  # function call with arguments
-                            left, arglist, right = child.children
+                        # <Operator: (> [arglist] <Operator: )> -> at most once
+                        if len(child.children) == 3:
+                            left, _, right = child.children
                             if left.type == 'operator' and left.value == '(' \
-                                    and arglist.type in ('arglist', 'name') \
                                     and right.type == 'operator' and right.value == ')' \
-                                    and not func_call:
+                                    and not func_call:  # function call with arguments
                                 func_call = True
                                 continue
-                    return True  # if it's not a trailer node
+                    return True  # if it's a subscript getter, or not a trailer node
                 return False  # if all checks passed
-            return True  # if it not a Name node or a node with child nodes
+            return True  # if it's a node without children but not a Name node
         if hasattr(node, 'children'):
             return any(map(cls.has_expr, node.children))  # type: ignore[attr-defined]
         return False
