@@ -703,17 +703,17 @@ class Context(BaseContext):
                     return True
 
                 # <Operator: .> <Name: ...>
-                # <Operator: (> [arglist] <Operator: )> -> at most once
+                # <Operator: (> [arglist] <Operator: )> -> at most once without PEP 614
                 func_call = False  # is function call detected
                 for child in children:
-                    if func_call:  # function call should be the last permitted node before PEP 614
+                    if func_call:  # there is already a function call, no more things allowed after that without PEP 614
                         return True
 
                     # NOTE: Python 3.9 grammar takes all child nodes as trailer instead of wrapping
                     # them up by their types like in 3.8
                     if child.type == 'trailer':
                         # <Operator: .> <Name: ...>
-                        # <Operator: (> <Operator: )> -> at most once
+                        # <Operator: (> <Operator: )> -> at most once without PEP 614
                         if len(child.children) == 2:
                             first, second = child.children
                             if (first.type == 'operator' and first.value == '.'
@@ -725,7 +725,7 @@ class Context(BaseContext):
                                 func_call = True
                                 continue
 
-                        # <Operator: (> [arglist] <Operator: )> -> at most once
+                        # <Operator: (> [arglist] <Operator: )> -> at most once without PEP 614
                         if len(child.children) == 3:
                             left, _, right = child.children
                             if left.type == 'operator' and left.value == '(' \
@@ -734,7 +734,7 @@ class Context(BaseContext):
                                 func_call = True
                                 continue
                     return True  # if it's a subscript getter, or not a trailer node
-                return False  # if all checks passed
+                return False  # if all checks of old decorator grammar passed
             return True  # if it's a node without children but not a Name node
         if hasattr(node, 'children'):
             return any(map(cls.has_expr, node.children))  # type: ignore[attr-defined]
