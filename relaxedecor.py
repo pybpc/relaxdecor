@@ -703,14 +703,39 @@ class Context(BaseContext):
                     return True
 
                 # <Operator: .> <Name: ...>
+                # <Operator: (> ( arglist | <Name: ...> ) <Operator: )> -> only once
+                func_call = False  # is function detected
                 for child in children:
-                    if child.type == 'trailer' and len(child.children) == 2:
-                        operator, name = child.children
-                        if operator.type == 'operator' and operator.value == '.' and name.type == 'name':
-                            continue
-                    return True
-                return False
-            return True
+                    if func_call:  # function call should be the last permitted node before PEP 614
+                        return True
+
+                    # NOTE: Python 3.9 grammar takes all child nodes as trailer instead of wrapping
+                    # them up by their types like in 3.8
+                    if child.type == 'trailer':
+                        # <Operator: .> <Name: ...>
+                        # <Operator: (> <Operator: )> -> only once
+                        if len(child.children) == 2:  # attribute getter or function call without arguments
+                            first, second = child.children
+                            if (first.type == 'operator' and first.value == '.' and second.type == 'name'):
+                                continue
+                            if first.type == 'operator' and first.value == '(' \
+                                    and second.type == 'operator' and second.value == ')' \
+                                    and not func_call:
+                                func_call = True
+                                continue
+
+                        # <Operator: (> ( arglist | <Name: ...> ) <Operator: )> -> only once
+                        if len(child.children) == 3:  # function call with arguments
+                            left, arglist, right = child.children
+                            if left.type == 'operator' and left.value == '(' \
+                                    and arglist.type in ('arglist', 'name') \
+                                    and right.type == 'operator' and right.value == ')' \
+                                    and not func_call:
+                                func_call = True
+                                continue
+                    return True  # if it's not a trailer node
+                return False  # if all checks passed
+            return True  # if it not a Name node or a node with child nodes
         if hasattr(node, 'children'):
             return any(map(cls.has_expr, node.children))  # type: ignore[attr-defined]
         return False
@@ -792,9 +817,9 @@ def convert(code: Union[str, bytes], filename: Optional[str] = None, *,
 
 
 def relaxedecor(filename: str, *, source_version: Optional[str] = None, linesep: Optional[Linesep] = None,
-           indentation: Optional[Union[int, str]] = None, pep8: Optional[bool] = None,
-           decorator: Optional[str] = None,
-           quiet: Optional[bool] = None, dry_run: bool = False) -> None:
+                indentation: Optional[Union[int, str]] = None, pep8: Optional[bool] = None,
+                decorator: Optional[str] = None,
+                quiet: Optional[bool] = None, dry_run: bool = False) -> None:
     """Convert the given Python source code file. The file will be overwritten.
 
     Args:
@@ -911,7 +936,7 @@ def get_parser() -> argparse.ArgumentParser:
                                               description="backup original files in case there're any issues")
     archive_group.add_argument('-na', '--no-archive', action='store_false', dest='do_archive', default=None,
                                help='do not archive original files (current: %s)' % __relaxedecor_do_archive__)
-    archive_group.add_argument('-k', '--archive-path', action='store', default=__relaxedecor_archive_path__, metavar='PATH',
+    archive_group.add_argument('-k', '--archive-path', action='store', default=__relaxedecor_archive_path__, metavar='PATH',  # pylint: disable=line-too-long
                                help='path to archive original files (current: %(default)s)')
     archive_group.add_argument('-r', '--recover', action='store', dest='recover_file', metavar='ARCHIVE_FILE',
                                help='recover files from a given archive file')
